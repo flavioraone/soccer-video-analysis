@@ -1,0 +1,1182 @@
+
+
+@charset "UTF-8";
+
+/*
+  INFO: The background image path is set to '/assets/background-football-tech.jpg'.
+  Please create an 'assets' folder in your project root and place the
+  background image there with the specified name.
+*/
+
+:root {
+  /* Updated variables for the new football-tech theme */
+  --background-main-overlay: rgba(0, 0, 0, 0.65); /* Darker overlay for better contrast */
+  --background-elements-translucent: rgba(25, 35, 55, 0.2); /* Translucent element background */
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-placeholder: #a0a0a0;
+  --border-accent: #00c6ff; /* Bright blue from the image */
+  --border-dashed-accent: #00c6ff;
+  --border-default: rgba(0, 198, 255, 0.3); /* Softer blue for general borders */
+  --highlight-element-bg: rgba(0, 198, 255, 0.1); /* Hover/active background */
+  --link-color: #00c6ff;
+  --error-color: #FF5252; /* Keep error color distinct */
+  --notice-color: #FFD700; /* Yellow for notices/warnings */
+
+
+  --button-primary-bg: #00c6ff;
+  --button-primary-text: #000;
+  --button-primary-border: #00c6ff;
+  --button-primary-shadow: 0 0 10px rgba(0, 198, 255, 0.7);
+
+  --button-secondary-bg: rgba(0, 198, 255, 0.1);
+  --button-secondary-text: #00c6ff;
+  --button-secondary-border: #00c6ff;
+
+  /* New: Fluorescent green for Analyze buttons */
+  --button-analyze-bg: #39FF14; /* Fluorescent Green */
+  --button-analyze-text: #000000; /* Black text for contrast */
+  --button-analyze-border: #28b40f; /* Slightly darker border for definition */
+  --button-analyze-shadow: 0 0 10px rgba(57, 255, 20, 0.7);
+
+
+  --track-color: rgba(0, 198, 255, 0.3);
+  --track-fill-color: #00c6ff;
+
+  /* Colors for tracking visualization */
+  --tracking-player-color: #00c6ff; /* Cyan */
+  --tracking-ball-color: #ff9800;   /* Orange */
+  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* New font */
+}
+
+/* Remove .light and .dark specific overrides if we want a single theme */
+/* Or, make .dark the primary theme and .light an alternative if needed */
+/* For now, :root styles will dominate. */
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-variant-ligatures: none;
+}
+
+body, html { /* Ensure html and body also take full height for background */
+  height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll from potential blur artifacts */
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Prevent #root from scrolling if main content is 100vh */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  color: var(--text-primary);
+}
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: var(--border-accent);
+}
+h4 {
+  font-size: 1rem;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+
+li {
+  list-style: none;
+}
+
+input, textarea {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: none;
+  color: var(--text-primary);
+  border: none;
+  outline: none;
+  font-size: 14px;
+  resize: none;
+  user-select: text;
+}
+input::placeholder, textarea::placeholder {
+  user-select: none;
+  color: var(--text-placeholder);
+}
+
+textarea {
+  width: 100%;
+  background: var(--background-elements-translucent);
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+}
+textarea:focus, textarea.active {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5);
+}
+
+[role=button] {
+  cursor: pointer;
+}
+
+button {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: none;
+  color: var(--text-primary);
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Increased gap slightly */
+}
+
+button:focus-visible, [role=button]:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 8px var(--link-color);
+}
+
+
+button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  outline: none;
+  box-shadow: none;
+}
+button .icon {
+  display: block;
+}
+
+/* General button styling - secondary look */
+.button {
+  padding: 10px 18px; /* Slightly larger padding */
+  border-radius: 8px; /* Rounded corners */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--button-secondary-border);
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  font-weight: 600;
+}
+.button.inactive {
+  opacity: 0.3;
+  pointer-events: none;
+}
+.button:hover:not([disabled]) {
+  background-color: rgba(0, 198, 255, 0.2);
+  border-color: var(--border-accent);
+  box-shadow: 0 0 8px rgba(0, 198, 255, 0.5);
+}
+
+/* Primary button styling (default blue) */
+.button.primaryButton {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border-color: var(--button-primary-border);
+  box-shadow: var(--button-primary-shadow);
+}
+.button.primaryButton:hover:not([disabled]) {
+  opacity: 0.9;
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.9);
+}
+
+
+.icon {
+  font-family: "Material Symbols Outlined";
+  font-weight: 300;
+  line-height: 1;
+  font-size: 20px; /* Slightly larger icons */
+}
+
+main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  overflow: hidden;
+  background: url('/assets/background-football-tech.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: var(--text-primary); /* Default text color for main */
+  position: relative; 
+}
+
+.languageSelector {
+  position: absolute;
+  top: 15px; /* Adjusted positioning */
+  right: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 1000; 
+}
+
+.languageSelector .button {
+  padding: 6px 10px;
+  font-size: 12px;
+  min-width: 45px; 
+  border-width: 1px; /* Ensure border is visible */
+}
+
+.languageSelector .button.active {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border-color: var(--button-primary-border);
+  font-weight: bold;
+  box-shadow: var(--button-primary-shadow);
+}
+
+
+.dualUploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1; /* Take available space */
+  padding: 2rem; /* Consistent padding */
+  text-align: center;
+  background-color: var(--background-main-overlay); /* Overlay for legibility */
+  backdrop-filter: blur(8px); /* Blur effect */
+  padding-top: 80px; /* Space for language selector and title */
+  gap: 1.5rem; /* Gap between elements */
+}
+
+.dualUploadContainer h1 {
+  font-size: 2.8rem; /* Larger title */
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: var(--border-accent); /* Bright blue for title */
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+.dualUploadContainer > p:first-of-type { /* Target the main description paragraph */
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
+  max-width: 650px; /* Control width of description */
+  line-height: 1.7;
+}
+
+.dropZoneContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 1.5rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px; /* Max width for the two dropzones + YouTube input */
+}
+
+.videoInputSlot { /* Wrapper for Video 1's dropzone and YouTube input */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 280px;
+}
+
+.youtubeUrlInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border-default);
+  border-radius: 8px;
+  background-color: var(--background-elements-translucent);
+}
+.youtubeOrSeparator {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+.youtubeUrlInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-default);
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+.youtubeUrlInput:focus {
+  border-color: var(--border-accent);
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5);
+}
+.loadUrlButton {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  align-self: flex-start; /* Align button to start if container is wider */
+}
+
+
+.videoDropZone {
+  flex: 1; /* Takes available space within videoInputSlot if side-by-side */
+  min-width: 260px; /* Minimum width before wrapping */
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  min-height: 180px; 
+  border: 2px dashed var(--border-dashed-accent); /* Dashed blue border */
+  border-radius: 12px; /* Rounded corners */
+  padding: 1.5rem; /* Adjusted padding */
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--background-elements-translucent); /* Translucent background */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  position: relative; 
+}
+
+.videoDropZone:hover, .videoDropZone:focus-visible {
+  border-color: var(--border-accent);
+  background-color: rgba(0, 198, 255, 0.15); /* Slightly more opaque on hover */
+}
+.videoDropZone.youtubeActive { /* Style when a YouTube URL is loaded in this slot */
+  border-style: solid; /* Change border to solid if YouTube URL is active */
+  /* cursor: default; /* No longer clickable to upload file if URL is primary */
+}
+
+
+.hiddenFileInput {
+  display: none; 
+}
+
+.dropZoneContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; 
+}
+
+.dropZoneContent .dropIcon {
+  font-size: 48px; 
+  color: var(--border-accent); /* Blue icon */
+}
+
+.dropZoneContent p {
+  font-size: 1rem; /* Main text in drop zone */
+  color: var(--text-primary);
+  margin: 0; 
+}
+
+.dropZoneContent .selectFileHint {
+  font-size: 0.9rem; /* Smaller hint text */
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+
+.videoDropZone .errorText {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+.videoPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%; 
+}
+.videoPreview p {
+  word-break: break-all;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
+.clearButton {
+  background: var(--error-color);
+  color: var(--text-primary);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.clearButton .icon {
+  font-size: 18px;
+}
+.clearButton:hover {
+  opacity: 0.85;
+}
+
+.uploadActions {
+  display: flex;
+  gap: 1rem; /* Spacing for action buttons */
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Apply fluorescent green to primary buttons in uploadActions */
+.uploadActions .button.primaryButton {
+  background-color: var(--button-analyze-bg);
+  color: var(--button-analyze-text);
+  border-color: var(--button-analyze-border);
+  box-shadow: var(--button-analyze-shadow);
+  padding: 12px 20px; /* Larger action buttons */
+  font-size: 1rem;
+}
+.uploadActions .button.primaryButton:hover:not([disabled]) {
+  opacity: 0.9;
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.9); /* Updated shadow color */
+}
+/* Keep specific padding for general action buttons if needed, or merge */
+.uploadActions .button { 
+  padding: 12px 20px;
+  font-size: 1rem;
+}
+
+
+.errorText.stitchError {
+  color: var(--error-color);
+  font-weight: bold;
+  margin-top: 10px;
+  background-color: rgba(255, 82, 82, 0.15); /* Background for error message */
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--error-color);
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 20px;
+  padding-top: 60px; 
+  background-color: var(--background-main-overlay); /* Consistent overlay */
+  backdrop-filter: blur(8px);
+}
+.loadingContainer .loading {
+  font-size: 1.2rem; /* Larger loading text */
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.loadingContainer p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.top {
+  display: flex;
+  overflow: hidden; /* Prevent content from spilling during resize */
+  position: relative; 
+  background-color: rgba(10, 20, 30, 0.5); 
+}
+
+.top > .languageSelector {
+    top: 15px;
+    right: 45px; 
+    z-index: 1001; /* Ensure above collapse button if they overlap */
+}
+
+
+.tools {
+  display: flex;
+  flex-direction: column; 
+  flex-grow: 1; /* Takes remaining space */
+  min-height: 0; /* Crucial for flex children to shrink properly */
+  overflow: hidden; /* Prevent content from spilling */
+  background-color: rgba(10, 20, 30, 0.3); 
+}
+
+.resizer {
+  height: 8px;
+  background-color: var(--border-default);
+  cursor: ns-resize;
+  z-index: 50; /* Ensure it's above content, but below modals etc. */
+  transition: background-color 0.2s ease;
+}
+.resizer:hover, .resizer:focus-visible {
+  background-color: var(--border-accent);
+}
+
+
+.bottomActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0; /* Padding for the actions area */
+  /* border-top: 1px solid var(--border-default); Optional: if a separator is desired above actions */
+}
+
+.exportActions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px; 
+}
+
+
+.switchVideoButton {
+  padding: 10px 15px;
+}
+.switchVideoButton .icon {
+  font-size: 18px;
+}
+
+
+.collapseButton {
+  border-left: 1px solid var(--border-default);
+  width: 35px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent; 
+  z-index: 100; /* Ensure it's above video player content if sidebar overlaps */
+}
+.collapseButton .icon {
+  font-size: 24px;
+  color: var(--text-primary);
+}
+.collapseButton:hover {
+  background-color: var(--highlight-element-bg);
+}
+
+.modeSelector {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  overflow: hidden;
+  width: 300px; 
+  background-color: rgba(15, 25, 40, 0.6); 
+  border-right: 1px solid var(--border-default); 
+  flex-shrink: 0; /* Prevent sidebar from shrinking if video player wants more space */
+}
+.modeSelector.hide {
+  width: 0;
+  padding: 0; 
+  border: none;
+  overflow: hidden; /* Ensure content is also hidden */
+}
+.modeSelector > div {
+  padding: 20px; 
+}
+.modeSelector > div:first-child {
+  flex: 1;
+  overflow-y: auto; /* Allow scrolling within sidebar content if it overflows */
+  overflow-x: hidden;
+}
+.modeSelector > div:last-child { /* Back button container */
+  border-top: 1px solid var(--border-default);
+  padding: 15px 20px; 
+}
+.modeSelector h2 {
+  font-size: 1.1rem; 
+  color: var(--text-primary);
+  white-space: nowrap;
+  margin-bottom: 15px;
+}
+.modeSelector.inactive {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.modeList {
+  flex-direction: column;
+  display: flex;
+  gap: 10px;
+}
+.modeList .button { 
+  justify-content: flex-start;
+  gap: 12px;
+  transition: background-color 0.2s, border-color 0.2s;
+  background-color: var(--button-secondary-bg);
+  border: 1px solid var(--button-secondary-border);
+  color: var(--button-secondary-text);
+  white-space: nowrap;
+  border-radius: 8px;
+  width: 100%;
+  padding: 12px 15px; 
+}
+.modeList .button:hover:not([disabled]) {
+  background-color: rgba(0, 198, 255, 0.2);
+  border-color: var(--border-accent);
+}
+.modeList .button.active {
+  background-color: var(--button-primary-bg);
+  border-color: var(--button-primary-border);
+  color: var(--button-primary-text);
+  font-weight: bold;
+  box-shadow: var(--button-primary-shadow);
+}
+.modeList + textarea { 
+  margin-top: 15px;
+}
+
+.generateButton { 
+  padding: 12px 20px;
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border: 1px solid var(--button-primary-border);
+  box-shadow: var(--button-primary-shadow);
+  width: 100%;
+  margin-top: 15px; 
+  font-size: 1rem;
+  font-weight: 600;
+}
+.generateButton:hover:not([disabled]) {
+  opacity: 0.9;
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.9);
+}
+
+
+.backButton button {
+  font-size: 0.9rem;
+  color: var(--link-color);
+  padding: 8px 0; 
+  border: none;
+  background: transparent;
+}
+.backButton button:hover {
+  text-decoration: underline;
+}
+.backButton .icon {
+  font-size: 20px;
+}
+
+.output {
+  flex-grow: 1; /* Output area takes available space in .tools */
+  min-height: 0; /* Important for flex shrinking */
+  padding: 20px;
+  overflow: auto;
+  position: relative;
+  background-color: rgba(10, 15, 25, 0.4); 
+}
+.output:hover .sentence {
+  opacity: 0.7; 
+}
+.output time {
+  color: var(--link-color);
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: inherit;
+  text-decoration: underline;
+  background-color: rgba(0, 198, 255, 0.1); 
+}
+.output .sentence {
+  font-size: 1.1rem; 
+  line-height: 1.8;
+  display: inline;
+  cursor: pointer;
+  transition: opacity 0.2s, background-color 0.2s;
+  color: var(--text-primary);
+}
+.output .sentence:hover, .output .sentence:focus-visible {
+  opacity: 1;
+  background-color: var(--highlight-element-bg);
+  border-radius: 3px;
+}
+.output .sentence time {
+  margin-right: 10px;
+}
+.output ul { 
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.output li.outputItem { 
+  border-radius: 6px;
+}
+.output .outputItemContent { 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.output ul button:not(.downloadClipButton) { 
+  font-size: 1rem;
+  display: flex;
+  gap: 15px;
+  text-align: left;
+  padding: 10px 12px; 
+  border-radius: 6px; 
+  width: 100%;
+  border: 1px solid transparent; 
+  background-color: rgba(255, 255, 255, 0.03); 
+  color: var(--text-primary);
+  flex-grow: 1; 
+}
+.output ul button:not(.downloadClipButton):hover,
+.output ul button:not(.downloadClipButton):focus-visible {
+  background-color: var(--highlight-element-bg);
+  border-color: var(--border-default);
+}
+.output ul button:not(.downloadClipButton) p.text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.downloadClipButton {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  border: 1px solid var(--button-secondary-border);
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-text);
+  min-width: 130px; /* Ensure button doesn't get too small */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+.downloadClipButton:hover:not([disabled]) {
+  background-color: rgba(0, 198, 255, 0.2);
+  border-color: var(--border-accent);
+}
+.downloadClipButton .icon {
+  font-size: 18px;
+}
+
+.inlineDownloadClipButton {
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.trackingOutput h3 {
+  margin-bottom: 12px;
+}
+.playerSelectionList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+.playerChip {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border-radius: 16px; /* Pill shape */
+  min-width: 50px;
+}
+.playerChip.active {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-text);
+  border-color: var(--button-primary-border);
+  box-shadow: var(--button-primary-shadow);
+}
+
+
+.output.modeTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.output.modeTable th, .output.modeTable td {
+  border: 1px solid var(--border-default);
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+  color: var(--text-secondary);
+}
+.output.modeTable th {
+  background-color: rgba(0, 198, 255, 0.1);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.output.modeTable tr:hover td {
+  background-color: var(--highlight-element-bg);
+}
+.output.modeTable tr td:first-child {
+  white-space: nowrap;
+}
+.output.modeTable tr[role="button"] {
+  cursor: pointer;
+}
+
+.lineChart {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  color: var(--text-secondary);
+}
+.lineChart .axisLabels text {
+  font-size: 11px;
+  fill: currentColor;
+}
+.lineChart .axisLabels.timeLabels text {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.lineChart .axisLabels.timeLabels text:hover,
+.lineChart .axisLabels.timeLabels text:focus-visible {
+  fill: var(--link-color);
+}
+.lineChart path {
+  fill: none;
+  stroke: var(--track-fill-color);
+  stroke-width: 2;
+}
+.lineChart .dataPoint {
+  cursor: pointer;
+}
+.lineChart .dataPoint circle {
+  fill: var(--track-fill-color);
+  stroke: var(--background-elements-translucent);
+  stroke-width: 2;
+  transition: r 0.2s ease;
+}
+.lineChart .dataPoint:hover circle,
+.lineChart .dataPoint:focus-visible circle {
+  r: 6;
+}
+.lineChart .dataPoint text {
+  fill: currentColor;
+  font-size: 10px;
+  text-anchor: middle;
+}
+.lineChart .axisTitle {
+  fill: currentColor;
+  font-size: 13px;
+  font-weight: 500;
+}
+.chartPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-placeholder);
+  font-size: 1rem;
+}
+
+.chartDownloadButton {
+  padding: 4px 8px; /* Smaller padding for in-chart button */
+  font-size: 0.8rem;
+  min-width: auto;
+  position: absolute; /* To position it within foreignObject */
+  transform: translateY(-5px); /* Adjust vertical alignment */
+}
+.chartDownloadButton .icon {
+  font-size: 16px;
+}
+
+/* Video Player Styles */
+.videoPlayer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center if video is smaller than container */
+  align-items: center;
+  overflow: hidden; /* Important for preventing video from overflowing its flex container */
+  background-color: #000; /* Black background for video area */
+  position: relative;
+  min-height: 0; /* For flex child */
+}
+
+.videoAreaContainer {
+  width: 100%;
+  height: calc(100% - 70px); /* Adjust height to leave space for controls */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.videoArea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.videoPlayer video {
+  max-width: 100%;
+  max-height: 100%;
+  display: block; /* Remove extra space below video */
+  cursor: pointer;
+  outline: none; /* Remove default browser outline on focus, handled by :focus-visible on parent controls if needed */
+}
+
+.videoPlayer canvas {
+  position: absolute;
+  /* top, left, width, height are set dynamically by JS */
+  pointer-events: none; /* Allow clicks to pass through to the video */
+  /* object-fit: contain; - This is not effective for canvas drawing content */
+}
+
+
+.videoCaption {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--text-primary);
+  padding: 5px 15px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+  max-width: 80%;
+  z-index: 10;
+}
+
+.videoControls {
+  width: 100%;
+  height: 70px; /* Fixed height for control bar */
+  background-color: rgba(20, 30, 45, 0.85); /* Dark translucent background for controls */
+  backdrop-filter: blur(5px);
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px; /* Space between scrubber and time/play button */
+  position: relative; /* For timecode markers */
+  z-index: 20;
+}
+
+.videoScrubber {
+  width: 100%;
+  height: 10px; /* Height of the clickable track area */
+  position: relative;
+}
+.videoScrubber input[type='range'] {
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.videoScrubber input[type='range']::-webkit-slider-runnable-track {
+  background: var(--track-color);
+  height: 6px; /* Visual track height */
+  border-radius: 3px;
+}
+.videoScrubber input[type='range']::-moz-range-track {
+  background: var(--track-color);
+  height: 6px;
+  border-radius: 3px;
+}
+.videoScrubber input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px; /* (track_height - thumb_height) / 2 ... (6px - 16px) / 2 = -5px */
+  background-color: var(--track-fill-color);
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--background-elements-translucent); /* Match dark control background */
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5);
+}
+.videoScrubber input[type='range']::-moz-range-thumb {
+  background-color: var(--track-fill-color);
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--background-elements-translucent);
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5);
+}
+/* For fill effect (using a pseudo-element on the input or its container if needed, or --pct variable) */
+.videoScrubber input[type='range'] {
+  position: relative; /* Needed for ::before pseudo-element if used for fill */
+  z-index: 1; /* Thumb above fill */
+}
+/* Style to show fill progress - this uses the --pct CSS variable from JS */
+.videoScrubber input[type='range']::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px;
+  background-color: var(--track-fill-color);
+  width: var(--pct, 0%); /* Default to 0% */
+  border-radius: 3px;
+  z-index: -1; /* Behind the thumb */
+  pointer-events: none;
+}
+
+
+.timecodeMarkers {
+  position: absolute;
+  top: -6px; /* Position above the scrubber track slightly */
+  left: 0;
+  width: 100%;
+  height: 6px;
+  pointer-events: none; /* Parent handles clicks */
+  z-index: 1; /* Above scrubber track but below thumb */
+}
+.timecodeMarker {
+  position: absolute;
+  bottom: 0; /* Align with bottom of scrubber track */
+  transform: translateX(-50%);
+  cursor: pointer;
+  pointer-events: all; /* Enable clicks on markers */
+}
+.timecodeMarker:hover .timecodeMarkerLabel,
+.timecodeMarker:focus-visible .timecodeMarkerLabel {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -105%);
+}
+.timecodeMarkerTick {
+  width: 2px;
+  height: 6px;
+  background: var(--track-fill-color);
+  margin: 0 auto;
+}
+.timecodeMarkerLabel {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -95%);
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  transition: opacity .2s, visibility .2s, transform .2s;
+  z-index: 10;
+}
+.timecodeMarkerLabel.right {
+  left: auto;
+  right: 50%;
+  transform: translate(50%, -95%);
+}
+.timecodeMarkerLabel.right:hover,
+.timecodeMarkerLabel.right:focus-visible {
+  transform: translate(50%, -105%);
+}
+.timecodeMarkerLabel p {
+  font-size: 10px;
+  color: #ccc;
+  margin-top: 2px;
+}
+
+.videoTime {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+.videoTime button {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  padding: 5px;
+}
+.videoTime button .icon {
+  font-size: 28px; /* Larger play/pause icon */
+}
+.videoTime button:hover .icon {
+  color: var(--link-color);
+}
+
+
+.emptyVideo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: var(--text-placeholder);
+  font-size: 1.1rem;
+}
+.emptyVideo .subtleHint {
+  font-size: 0.9rem;
+  color: rgba(160, 160, 160, 0.7);
+  margin-top: 8px;
+}
+
+
+/* Loading and Error states */
+.loading {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+}
+.loading span {
+  display: inline-block;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.clippingMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0,0,0,0.85);
+  color: var(--text-primary);
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 1rem;
+  z-index: 100;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.noticeMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--notice-color); /* Yellow for notices */
+  background-color: rgba(var(--notice-color), 0.1);
+  border: 1px solid rgba(var(--notice-color), 0.3);
+  border-radius: 8px;
+}
+
+
+/* Ensure scrollbars are styled for dark theme if needed (WebKit example) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-accent);
+}
+
+/* Ensure focus visibility for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--link-color) !important; /* Ensure high visibility */
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.3); /* Softer glow */
+}
+/* Remove default outline for elements that have custom focus styles (like buttons) */
+button:focus, [role=button]:focus {
+  outline: none;
+}
+textarea:focus-visible, input.youtubeUrlInput:focus-visible {
+    outline-offset: 0px;
+    box-shadow: 0 0 5px rgba(0, 198, 255, 0.5);
+}

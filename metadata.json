@@ -1,0 +1,6 @@
+{
+  "name": "Analisador de vídeos de futebol",
+  "description": "An interactive video player with analysis capabilities, supporting multiple languages.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
